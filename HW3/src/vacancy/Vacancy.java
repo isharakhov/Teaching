@@ -1,10 +1,14 @@
 package vacancy;
 
 import employer.Company;
+import interfaces.CollectToMap;
 import interfaces.Information;
+import interfaces.Details;
 import interfaces.VacancyPublications;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Vacancy implements VacancyPublications, Information {
+public class Vacancy<T> implements VacancyPublications, Information, Details<T>, CollectToMap<T> {
 
   private Company company;
   private String vacancyTitle;
@@ -88,5 +92,30 @@ public class Vacancy implements VacancyPublications, Information {
   @Override
   public void getInfo() {
     System.out.println("Вакансия - " + getVacancyTitle() +"\nЗарплата - " + getSalary() + "\nТребования - " + getRequirements());
+  }
+
+  @Override
+  public void displayDetails(T data) {
+    System.out.println("Вакансия: " + vacancyTitle);
+    System.out.println("Описание вакансии: " + vacancyDescription);
+    System.out.println("Зарплата: " + salary);
+  }
+
+  private final Map<String, String> vacancyMap = new HashMap<>();
+
+  @Override
+  public Map<String, String> save(T vacancy) {
+    vacancyMap.put(vacancyTitle, vacancyDescription);
+    return vacancyMap;
+  }
+
+  @Override
+  public void delete(T vacancy) {
+    vacancyMap.remove(vacancyTitle);
+  }
+
+  @Override
+  public String findByName(String name) {
+   return vacancyMap.get(name);
   }
 }
