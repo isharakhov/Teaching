@@ -1,6 +1,6 @@
 package vacancy;
 
-class JobVacancy extends Vacancy<JobVacancy> {
+ public class JobVacancy extends Vacancy<JobVacancy> {
 
   private String company;
   private int salary;
